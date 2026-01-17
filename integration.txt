@@ -1,0 +1,2 @@
+# Integration
+This is an example integration file.
