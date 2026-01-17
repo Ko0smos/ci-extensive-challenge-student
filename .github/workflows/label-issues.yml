@@ -1,0 +1,30 @@
+name: Label Issues
+on:
+  issues:
+    types:
+      - opened
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add label
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const issue = context.issue;
+            const title = issue.title.toLowerCase();
+            if (title.includes('error')) {
+              await github.issues.addLabelsToIssue({
+                issue_number: issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ['bug']
+              });
+            } else if (title.includes('add')) {
+              await github.issues.addLabelsToIssue({
+                issue_number: issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ['feature']
+              });
+            }
